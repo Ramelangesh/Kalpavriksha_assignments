@@ -1,0 +1,96 @@
+#include <assert.h>
+#include <limits.h>
+#include <math.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char* readline();
+
+// Complete the isBalanced function below.
+
+// Please either make the string static or allocate on the heap. For example,
+// static char str[] = "hello world";
+// return str;
+//
+// OR
+//
+// char* str = "hello world";
+// return str;
+//
+char* isBalanced(char str[]) {
+    
+char dup[1000];
+    char ch;
+    int length=strlen(str);
+    int count=0,flag=0;
+    for(int iter=0;iter<length;iter++)
+    {
+        if(  (str[iter]=='(') || (str[iter]=='{') || (str[iter]=='['))
+        {
+            dup[count]=str[iter];
+            flag=1;
+            count++;
+        }
+        else{
+            if(flag==0)
+            {
+                return "NO";
+            }
+            else{
+                if(str[iter]==')')
+                    ch='(';
+                else if(str[iter]==']')
+                    ch='[';
+                else
+                {
+                    ch='{';
+                }
+                
+                    if(dup[count-1]==ch)
+                    {
+                        count--;
+                    }
+                    else
+                    {
+                        return "NO";
+                    }
+                }
+            }
+        }
+    if(count==0)
+    {
+        return "YES";
+    }
+    return "NO";
+
+}
+
+int main()
+{
+  /*  FILE* fptr = fopen(getenv("OUTPUT_PATH"), "w");
+
+    char* t_endptr;
+    char* t_str = readline();
+    int t = strtol(t_str, &t_endptr, 10);
+
+    if (t_endptr == t_str || *t_endptr != '\0') { exit(EXIT_FAILURE); }
+*/
+    char str[1001]={'\0'};
+    fscanf(stdin,"%s",str);
+    int t=atoi(str);
+    for (int t_itr = 0; t_itr < t; t_itr++) {
+        //char* s = readline();
+        fscanf(stdin,"%s",str);
+        char* result = isBalanced(str);
+
+        fprintf(stdout, "%s\n", result);
+    }
+
+   // fclose(fptr);
+
+    return 0;
+}
